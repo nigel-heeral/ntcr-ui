@@ -206,6 +206,14 @@ class CommitVote extends Component {
                 </ActionStepRow> */}
               </ActionsSection>
 
+              <Button
+                methodName="approve"
+                onClick={() => onSendTx('approveVoting', this.state)}
+                mode="strong"
+              >
+                {'Approve tokens for Voting'}
+              </Button>
+
               <ReturnToRegistry>
                 <ArrowIcon>
                   <Img alt="goback" src={leftArrowIcon} />

@@ -12,15 +12,23 @@ import { TransactionsContext } from './index'
 import SidePanelSeparator from './components/SidePanelSeparator'
 import SidePanel from './components/SidePanel'
 import DetailsSection from './components/DetailsSection'
+import ProgressBar from './ProgressBar.js'
 
 export default class RevealVote extends Component {
   state = {
+    value: 60,
+    voting: 'Current Votes',
     ticket: {
       numTokens: '',
     },
+    successPercentage: 0,
+    successValue: 0,
+    dangerPercentage: 0,
+    dangerValue: 0,
   }
   componentDidMount() {
     this.handleGetLocal()
+    this.setState(this.getVoteResults(this.props.selectedOne))
   }
 
   handleGetLocal = async () => {
@@ -36,6 +44,23 @@ export default class RevealVote extends Component {
     }
   }
 
+  getVoteResults = selectedOne => {
+    console.log(selectedOne)
+    const successValue = parseInt(selectedOne.votesFor) / 1000000000000000000
+    const dangerValue = parseInt(selectedOne.votesAgainst) / 1000000000000000000
+    const totalVotes = successValue + dangerValue
+
+    const successPercentage = successValue / totalVotes * 100
+    const dangerPercentage = 100 - successPercentage
+
+    return {
+      successValue,
+      successPercentage: successPercentage ? successPercentage : 0,
+      dangerValue,
+      dangerPercentage: dangerPercentage ? dangerPercentage : 0,
+    }
+  }
+
   render() {
     return (
       <TransactionsContext.Consumer>
@@ -48,33 +73,7 @@ export default class RevealVote extends Component {
           onSendTx,
           tcr,
         }) => (
-          <SidePanel
-            title="Reveal Vote"
-            opened={opened === 'revealVote'}
-            onClose={closeSidePanel}
-          >
-            <SideSplit
-              leftTitle={'Voting Rights'}
-              leftItem={balances.votingRights}
-              rightTitle={'Locked Tokens'}
-              rightItem={balances.lockedTokens}
-            />
-            <SideSplit
-              leftTitle={'Votes For'}
-              leftItem={baseToConvertedUnit(selectedOne.votesFor, tcr.tokenDecimals)}
-              rightTitle={'Votes Against'}
-              rightItem={baseToConvertedUnit(selectedOne.votesAgainst, tcr.tokenDecimals)}
-            />
-            <SideSplit
-              leftTitle={'Tokens You Committed'}
-              leftItem={baseToConvertedUnit(
-                this.state.ticket.numTokens,
-                tcr.tokenDecimals
-              )}
-              rightTitle={'POLL ID'}
-              rightItem={selectedOne && selectedOne.challengeID}
-            />
-
+          <SidePanel title="Reveal Vote" opened={true} onClose={closeSidePanel}>
             <DetailsSection listing={selectedOne} />
 
             <SidePanelSeparator />
@@ -86,11 +85,29 @@ export default class RevealVote extends Component {
                   small
                   text={`Reveal for vote: ${selectedOne && selectedOne.listingID}`}
                 />
+
                 <SideText
                   text={`Your vote: ${
                     this.state.ticket.voteOption === '0' ? 'Oppose' : 'Support'
                   }`}
                 />
+
+                <MarginDiv>
+                  <div>
+                    {this.state.voting}: {this.state.successPercentage.toFixed(2)}% for,{' '}
+                    {this.state.dangerPercentage.toFixed(2)}% against
+                  </div>
+                  <div>Your Balance: userBalance</div>
+                </MarginDiv>
+
+                <ProgressBar
+                  successPercentage={this.state.successPercentage}
+                  successValue={this.state.successValue}
+                  dangerValue={this.state.dangerValue}
+                  dangerPercentage={this.state.dangerPercentage}
+                  revealVoteEnded={this.props.revealVoteEnded}
+                />
+
                 <Button
                   methodName="revealVote"
                   onClick={() => onSendTx('revealVote', this.state.ticket)}
@@ -101,7 +118,25 @@ export default class RevealVote extends Component {
                 </Button>
               </MarginDiv>
             ) : (
-              <SideText text={'You have not committed to this poll'} />
+              <div>
+                <SideText text={'You have not committed to this poll'} />
+
+                <MarginDiv>
+                  <div>
+                    {this.state.voting}: {this.state.successPercentage.toFixed(2)}% for,{' '}
+                    {this.state.dangerPercentage.toFixed(2)}% against
+                  </div>
+                  <div>Your Balance: userBalance</div>
+
+                  <ProgressBar
+                    successPercentage={this.state.successPercentage}
+                    successValue={this.state.successValue}
+                    dangerValue={this.state.dangerValue}
+                    dangerPercentage={this.state.dangerPercentage}
+                    revealVoteEnded={this.props.revealVoteEnded}
+                  />
+                </MarginDiv>
+              </div>
             )}
           </SidePanel>
         )}

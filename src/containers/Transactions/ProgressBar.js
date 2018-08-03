@@ -5,27 +5,29 @@ import { Progress } from 'reactstrap'
 export default class ProgressBar extends Component {
   animatedBar() {
     return (
-      <Progress multi>
-        <Progress animated bar color="success" value={this.props.successPercentage}>
+      <div>
+        <Progress animated color="success" value={this.props.successPercentage}>
           {this.props.successValue}
         </Progress>
-        <Progress animated bar color="danger" value={this.props.dangerPercentage}>
+        <br />
+        <Progress animated color="danger" value={this.props.dangerPercentage}>
           {this.props.dangerValue}
         </Progress>
-      </Progress>
+      </div>
     )
   }
 
   plainBar() {
     return (
-      <Progress multi>
-        <Progress bar color="success" value={this.props.successPercentage}>
+      <div>
+        <Progress color="success" value={this.props.successPercentage}>
           {this.props.successValue}
         </Progress>
-        <Progress bar color="danger" value={this.props.dangerPercentage}>
+        <br />
+        <Progress color="danger" value={this.props.dangerPercentage}>
           {this.props.dangerValue}
         </Progress>
-      </Progress>
+      </div>
     )
   }
 

@@ -97,7 +97,6 @@ export default class RevealVote extends Component {
                     {this.state.voting}: {this.state.successPercentage.toFixed(2)}% for,{' '}
                     {this.state.dangerPercentage.toFixed(2)}% against
                   </div>
-                  <div>Your Balance: userBalance</div>
                 </MarginDiv>
 
                 <ProgressBar
@@ -126,8 +125,6 @@ export default class RevealVote extends Component {
                     {this.state.voting}: {this.state.successPercentage.toFixed(2)}% for,{' '}
                     {this.state.dangerPercentage.toFixed(2)}% against
                   </div>
-                  <div>Your Balance: userBalance</div>
-
                   <ProgressBar
                     successPercentage={this.state.successPercentage}
                     successValue={this.state.successValue}
@@ -136,6 +133,7 @@ export default class RevealVote extends Component {
                     revealVoteEnded={this.props.revealVoteEnded}
                   />
                 </MarginDiv>
+                <div>Your Balance: userBalance</div>
               </div>
             )}
           </SidePanel>

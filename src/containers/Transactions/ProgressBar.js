@@ -17,18 +17,17 @@ export default class ProgressBar extends Component {
     return (
       <div>
         <FlexContainer>
+          <IoIosThumbsUp color={'green'} />
           <Progress animated color="success" value={this.props.successPercentage}>
             {this.props.successValue}
           </Progress>
-
-          <IoIosThumbsUp />
         </FlexContainer>
 
         <FlexContainer>
+          <IoIosThumbsDown color={'red'} />
           <Progress animated color="danger" value={this.props.dangerPercentage}>
             {this.props.dangerValue}
           </Progress>
-          <IoIosThumbsDown />
         </FlexContainer>
       </div>
     )

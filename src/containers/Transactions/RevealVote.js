@@ -27,6 +27,7 @@ export default class RevealVote extends Component {
     dangerPercentage: 0,
     dangerValue: 0,
   }
+
   componentDidMount() {
     this.handleGetLocal()
     this.setState(this.getVoteResults(this.props.selectedOne))
@@ -87,11 +88,16 @@ export default class RevealVote extends Component {
                   text={`Reveal for vote: ${selectedOne && selectedOne.listingID}`}
                 />
 
-                <SideText
-                  text={`Your vote: ${
-                    this.state.ticket.voteOption === '0' ? 'Oppose' : 'Support'
-                  }`}
-                />
+                <div>
+                  {' '}
+                  You committed {this.state.ticket.numTokens / 1000000000000000000} tokens
+                  for{' '}
+                  {this.state.ticket.voteOption === '0' ? (
+                    <IoIosThumbsDown color={'red'} />
+                  ) : (
+                    <IoIosThumbsUp color={'green'} />
+                  )}
+                </div>
 
                 <MarginDiv>
                   <div>
@@ -122,7 +128,6 @@ export default class RevealVote extends Component {
             ) : (
               <div>
                 <SideText text={'You have not committed to this poll'} />
-
                 <MarginDiv>
                   <div>
                     {this.state.voting}: {this.state.successPercentage.toFixed(2)}% for,{' '}

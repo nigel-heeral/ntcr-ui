@@ -1,18 +1,35 @@
 import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Progress } from 'reactstrap'
+import styled from 'styled-components'
 
+import { IoIosThumbsDown, IoIosThumbsUp } from 'react-icons/io'
+
+const FlexContainer = styled.div`
+  display: flex;
+  margin-top: 1em;
+  & > div {
+    width: 100%;
+  }
+`
 export default class ProgressBar extends Component {
   animatedBar() {
     return (
       <div>
-        <Progress animated color="success" value={this.props.successPercentage}>
-          {this.props.successValue}
-        </Progress>
-        <br />
-        <Progress animated color="danger" value={this.props.dangerPercentage}>
-          {this.props.dangerValue}
-        </Progress>
+        <FlexContainer>
+          <Progress animated color="success" value={this.props.successPercentage}>
+            {this.props.successValue}
+          </Progress>
+
+          <IoIosThumbsUp />
+        </FlexContainer>
+
+        <FlexContainer>
+          <Progress animated color="danger" value={this.props.dangerPercentage}>
+            {this.props.dangerValue}
+          </Progress>
+          <IoIosThumbsDown />
+        </FlexContainer>
       </div>
     )
   }
@@ -32,6 +49,6 @@ export default class ProgressBar extends Component {
   }
 
   render() {
-    return this.props.revealVoteEnded ? this.plainBar() : this.animatedBar()
+    return this.props.revealVoteEnded ? null : this.animatedBar()
   }
 }

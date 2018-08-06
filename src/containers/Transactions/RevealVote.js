@@ -13,6 +13,7 @@ import SidePanelSeparator from './components/SidePanelSeparator'
 import SidePanel from './components/SidePanel'
 import DetailsSection from './components/DetailsSection'
 import ProgressBar from './ProgressBar.js'
+import { IoIosThumbsDown, IoIosThumbsUp } from 'react-icons/io'
 
 export default class RevealVote extends Component {
   state = {
@@ -98,14 +99,16 @@ export default class RevealVote extends Component {
                     {this.state.dangerPercentage.toFixed(2)}% against
                   </div>
                 </MarginDiv>
-
-                <ProgressBar
-                  successPercentage={this.state.successPercentage}
-                  successValue={this.state.successValue}
-                  dangerValue={this.state.dangerValue}
-                  dangerPercentage={this.state.dangerPercentage}
-                  revealVoteEnded={this.props.revealVoteEnded}
-                />
+                <MarginDiv>
+                  <ProgressBar
+                    successPercentage={this.state.successPercentage}
+                    successValue={this.state.successValue}
+                    dangerValue={this.state.dangerValue}
+                    dangerPercentage={this.state.dangerPercentage}
+                    revealVoteEnded={this.props.revealVoteEnded}
+                  />
+                </MarginDiv>
+                <div>Your Balance: userBalance</div>
 
                 <Button
                   methodName="revealVote"

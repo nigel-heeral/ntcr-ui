@@ -12,6 +12,7 @@ import SidePanelSeparator from './components/SidePanelSeparator'
 import TotalAmount from './components/TotalAmount'
 import SidePanel from './components/SidePanel'
 import { TransactionsContext } from './index'
+import ProgressBar from './ProgressBar'
 
 export default class Apply extends React.Component {
   state = {
@@ -42,6 +43,8 @@ export default class Apply extends React.Component {
             onClose={closeSidePanel}
           >
             <SidePanelSeparator />
+
+            <ProgressBar />
 
             {needToApproveRegistry ? (
               <SideText small color="grey" text={translate('ins_approve_registry')} />
